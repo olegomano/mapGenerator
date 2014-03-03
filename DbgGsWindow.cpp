@@ -30,11 +30,11 @@ COPYDATASTRUCT MyCDS;
 #include "WinConnect.h"
 //#include <windows.h>
 #include <stdio.h>
-
+#include "C:\Users\Oleg Laptop\Downloads\DbgGsWindow\ShipWinConnect.h"
 
 typedef  unsigned int u32;
 
-int sLeft = 0,sTop = 0,sWidth = 1024,sHeight = 960;
+int sLeft = 0,sTop = 0,sWidth = WINDOW_WIDTH,sHeight = WINDOW_HEIGHT;
 unsigned int * GPUGSLIB_MyVramViewBuf;
 static WCHAR sLMViewClassName[256];
 static unsigned char *LMViewBuff = NULL;
@@ -264,7 +264,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 	wcex.hIcon			= LoadIcon(hInstance, MAKEINTRESOURCE(IDI_DBGGSWINDOW));
 	wcex.hCursor		= LoadCursor(NULL, IDC_ARROW);
 	wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
-	wcex.lpszMenuName	= 0;//MAKEINTRESOURCE(IDC_DBGGSWINDOW);
+	wcex.lpszMenuName	= MAKEINTRESOURCE(IDC_DBGGSWINDOW);
 	wcex.lpszClassName	= szWindowClass;
 	wcex.hIconSm		= LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -367,6 +367,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case IDM_EXIT:
 			DestroyWindow(hWnd);
 			break;
+		case IDM_REGEN:
+			regenMap();
+			break;
 		default:
 			return DefWindowProc(hWnd, message, wParam, lParam);
 		}
@@ -379,7 +382,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_KEYUP:
 		onKey( wParam,1);
 	break;
-
+	case WM_MOUSEWHEEL://MOUSEWHEEL SCROLL
+		onWheelScroll(GET_WHEEL_DELTA_WPARAM(wParam));
+	break;
 	case WM_ERASEBKGND :
 		return 0;
 	break;
@@ -391,7 +396,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			//clear first
 			unsigned int* pB = (unsigned int*)LMViewBuff;
 			for(int i = 0; i<sWidth*sHeight; i++){
-				*pB++ = 0x80808080;
+				*pB++ = 0x00000080;
 			}
 			onDraw( &sDrawBuff);
 			DrawBuff();

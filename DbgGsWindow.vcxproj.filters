@@ -48,6 +48,9 @@
     <ClInclude Include="mapGen\Ship.h">
       <Filter>Source Files\mapGen</Filter>
     </ClInclude>
+    <ClInclude Include="ShipWinConnect.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

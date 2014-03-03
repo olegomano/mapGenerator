@@ -6,6 +6,7 @@
 #include <iostream>
 #include <time.h> 
 #include "Ship.h"
+#include "C:\Users\Oleg Laptop\Downloads\DbgGsWindow\ShipWinConnect.h"
 #include "C:\Users\Oleg Laptop\Downloads\DbgGsWindow\PrimDraw.h"
 
 static void debugTrap(){
@@ -18,6 +19,7 @@ int countLeft = 0;
 int countRight = 0;
 int countUp = 0;
 int countDown = 0;
+
 int generateUniqueRand(int maxRand, int minRand, int* invalidValues, int invalidValLength, int count){
 	if (count > 8){
 		return invalidValues[rand() % invalidValLength];
@@ -168,24 +170,36 @@ void removeCommonWall(mapRoom* room){
 
 	for (int i =  0; i < cellsToRemove ; i++){
 		if (pCellToRemove[i]->dir == DOWN){
+			if (countDown <= 3){
+				pCellToRemove[i]->isEdge = false;
+			}
 			if (countRDown >= 1 && countRDown < countDown - 1){
 				pCellToRemove[i]->isEdge = false;
 			}
 			countRDown++;
 		}
 		else if (pCellToRemove[i]->dir == LEFT){
+			if (countLeft <= 3){
+				pCellToRemove[i]->isEdge = false;
+			}
 			if (countRLeft >= 1 && countRLeft < countLeft - 1){
 				pCellToRemove[i]->isEdge = false;
 			}
 			countRLeft++;
 		}
 		else if (pCellToRemove[i]->dir == RIGHT){
+			if (countRight <= 3){
+				pCellToRemove[i]->isEdge = false;
+			}
 			if (countRRight >= 1 && countRRight < countRight - 1){
 				pCellToRemove[i]->isEdge = false;
 			}
 			countRRight++;
 		}
 		else if (pCellToRemove[i]->dir == UP){
+			if (countUp <= 3){
+				pCellToRemove[i]->isEdge = false;
+			}
 			if (countRUp >= 1 && countRUp < countUp - 1 && countRUp){
 				pCellToRemove[i]->isEdge = false;
 			}
@@ -232,7 +246,7 @@ void mapWorld::createRoom(int roomNumber, int xStart, int yStart, int orientatio
 	//roomH = rand() % (maxRoomS) + minRoomS;
 	//roomW = rand() % (maxRoomS) + minRoomS;
 	if (orientation == UP || orientation == DOWN){
-		if (allocatedRooms % 2 == 0){
+		if (allocatedRooms % 3 == 0){
 			roomW = rand() % (maxRoomS - minRoomS * 2) + minRoomS;
 			roomH = roomW * 3;
 		}
@@ -240,10 +254,16 @@ void mapWorld::createRoom(int roomNumber, int xStart, int yStart, int orientatio
 			roomW = rand() % (maxRoomS) + minRoomS;
 			roomH = rand() % minRoomS + roomW;
 		}
+		/*
+		if (allocatedRooms % 7 == 0){
+			roomW = (rand() % minRoomS) * maxRoomS;
+			roomH = roomW + minRoomS;
+		}
+		*/
 
 	}
 	else{
-		if (allocatedRooms % 2 == 0){
+		if (allocatedRooms % 3 == 0){
 			roomH = rand() % (maxRoomS - minRoomS * 2) + minRoomS;
 			roomW = roomH * 3;
 		}
@@ -251,7 +271,14 @@ void mapWorld::createRoom(int roomNumber, int xStart, int yStart, int orientatio
 			roomH = rand() % (maxRoomS)+minRoomS;
 			roomW = rand() % minRoomS + roomH;
 		}
+		/*
+		if (allocatedRooms % 7 == 0){
+			roomH = (rand() % minRoomS) * maxRoomS;
+			roomW = roomH + minRoomS;
+		}
+		*/
 	}
+	
 	/**
 	if (allocatedRooms % 2 == 0){
 		if (orientation == UP || orientation == DOWN){
@@ -305,7 +332,7 @@ void mapWorld::createRoom(int roomNumber, int xStart, int yStart, int orientatio
 	default:
 		return;
 	}
-	std::cout << roomH << " x " << roomW << " in dir " << dir << " start at " << xStart << " " << yStart << " " << allocatedRooms << std::endl;
+	//std::cout << roomH << " x " << roomW << " in dir " << dir << " start at " << xStart << " " << yStart << " " << allocatedRooms << std::endl;
 	
 	int indexInRef = pMapRoomAr[allocatedRooms - 1].pStartInRefAr;
 	int indexIncellArr = pCellRoomRefArray[indexInRef];
@@ -417,7 +444,6 @@ void mapWorld::createChildRoom(int parentRoomIndex, int doorDir, int roomNumber,
 	for (int b = 0; b < pMapRoomAr[parentRoomIndex].length; b++){
 		if (getCellFromRoomArr(parentRoomIndex, b)->dir == doorDir){
 			if (count2 == midPoint){
-				
 				pMapRoomAr[parentRoomIndex].siblingRoomAr[childNum] = allocatedRooms;
 				createRoom(roomNumber, getCellFromRoomArr(parentRoomIndex, b)->x + modX, getCellFromRoomArr(parentRoomIndex, b)->y + modY, doorDir);
 				return;
@@ -465,33 +491,73 @@ void mapWorld::printMap(){
 	}
 }
 
-int cellWidth = 4;
+int cellWidth = 1;
 int borderWidth = cellWidth + 1;
 void mapWorld::graphicsDrawMap(DrawBuffer *pDBuff){
 	int count = 0;
+	int amountOfRooms = allocatedRooms;
+	char dstBuff[32];
+	itoa(allocatedRooms,dstBuff,10);
+	DrawString(dstBuff,15,200);
 	//DrawRect(100, 100, 100, 100, 0xFF000080, pDBuff);
 	for (int i = 0; i < allocatedRooms; i++){
-		for (int b = 0; b < pMapRoomAr[i].length; b++){
+		for (int c = 0; c < pMapRoomAr[i].length; c++){
 			int color =  0xFFFFFFFF;
-			int xS = getCellFromRoomArr(pMapRoomAr[i].roomNum, b)->x;
-			int yS = getCellFromRoomArr(pMapRoomAr[i].roomNum, b)->y;
-			DrawRect(xS*cellWidth, yS*cellWidth, xS*cellWidth + cellWidth, yS*cellWidth + cellWidth,color, pDBuff);
+			
+			int xS = getCellFromRoomArr(pMapRoomAr[i].roomNum, c)->x;
+			int yS = getCellFromRoomArr(pMapRoomAr[i].roomNum, c)->y;
+			
+			int l = toScreenX(xS,mapW/2);
+			int t = toScreenY(yS,mapH/2);
+			int r = toScreenX(xS + 1,mapW/2);
+			int b = toScreenY(yS + 1, mapH/2);
+			DrawRect(l, t, r, b, color, pDBuff);
+			if (getCellFromRoomArr(pMapRoomAr[i].roomNum, c)->isEdge){
+				int color = 0x00000000;
+				//DrawRect(pCellMap[i].x * borderWidth, pCellMap[i].y * borderWidth, pCellMap[i].x * borderWidth + borderWidth, pCellMap[i].y * borderWidth + borderWidth, 0xFFFFFFFF, pDBuff);
+				int l = toScreenX(xS, mapW / 2);
+				int t = toScreenY(yS, mapH / 2);
+				int r = toScreenX(xS + 1, mapW / 2);
+				int b = toScreenY(yS + 1, mapH / 2);
+				DrawRect(l, t, r, b, color, pDBuff);
+				//DrawRect(pCellMap[i].x * cellWidth, pCellMap[i].y * cellWidth, pCellMap[i].x * cellWidth + cellWidth, pCellMap[i].y * cellWidth + cellWidth,color , pDBuff);
+				//char c = 'c';
+				//DrawString(&c, pCellMap[i].x * cellWidth, pCellMap[i].y * cellWidth);
+			}
+			//DrawRect(xS*cellWidth, yS*cellWidth, xS*cellWidth + cellWidth, yS*cellWidth + cellWidth,color, pDBuff);
 		}
 	}
+	/*
 	for (int i = 0; i < mapW*mapH; i++){
 		if (pCellMap[i].isEdge){
 			int color = 0x00000000;
 			//DrawRect(pCellMap[i].x * borderWidth, pCellMap[i].y * borderWidth, pCellMap[i].x * borderWidth + borderWidth, pCellMap[i].y * borderWidth + borderWidth, 0xFFFFFFFF, pDBuff);
-			DrawRect(pCellMap[i].x * cellWidth, pCellMap[i].y * cellWidth, pCellMap[i].x * cellWidth + cellWidth, pCellMap[i].y * cellWidth + cellWidth,color , pDBuff);
+			int l = toScreenX(pCellMap[i].x,mapW/2);
+			int t = toScreenY(pCellMap[i].y,mapH/2);
+			int r = toScreenX(pCellMap[i].x + 1,mapW/2);
+			int b = toScreenY(pCellMap[i].y + 1,mapH/2);
+			DrawRect(l,t,r,b,color,pDBuff);
+			//DrawRect(pCellMap[i].x * cellWidth, pCellMap[i].y * cellWidth, pCellMap[i].x * cellWidth + cellWidth, pCellMap[i].y * cellWidth + cellWidth,color , pDBuff);
 			//char c = 'c';
 			//DrawString(&c, pCellMap[i].x * cellWidth, pCellMap[i].y * cellWidth);
 		}
+		
 		count++;
 		if (count == mapW){
 			count = 0;
 			//std::cout << std::endl;
 		}
 	}
+	*/
+}
+
+void regenMap(){
+	gMap.resetMap();
+	countLeft = 0;
+	countRight = 0;
+	countUp = 0;
+	countDown = 0;
+	generateMap();
 }
 
 void drawCellMap(DrawBuffer *pDBuff){

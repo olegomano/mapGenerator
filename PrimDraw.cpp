@@ -10,7 +10,11 @@ void DrawRect( int l, int t, int r, int b, int Color, DrawBuffer *pBuff)
 	int rr = (r>pBuff->width) ? pBuff->width: r;
 	int bb = (b>pBuff->height) ? pBuff->height: b;
 
+
 	if( (rr<ll) || (bb<tt) ) return; 
+
+	if (ll >= pBuff->width) return;
+	if (tt >= pBuff->height) return;
 
 	unsigned int *pPix  =(unsigned int *) pBuff->pData;
     int w = rr - ll;
@@ -25,6 +29,7 @@ void DrawRect( int l, int t, int r, int b, int Color, DrawBuffer *pBuff)
 
 }
 
-void DrawFillRect(int l, int t, int r, int b, int Color, DrawBuffer *pBuff){
+void DrawEmptyRect(int l, int t, int r, int b, int Color, DrawBuffer *pBuff){
 
 }
+

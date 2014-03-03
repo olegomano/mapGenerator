@@ -1,33 +1,25 @@
-﻿Build started 12/19/2013 6:30:11 PM.
-     1>Project "C:\DO_NOT_DELETE\DbgGsWindow\DbgGsWindow\DbgGsWindow.vcxproj" on node 2 (build target(s)).
-     1>InitializeBuildStatus:
-         Creating "Release\DbgGsWindow.unsuccessfulbuild" because "AlwaysCreate" was specified.
-       ClCompile:
-         All outputs are up-to-date.
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Release\DbgGsWindow.pch" /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt DbgGsWindow.cpp
-         DbgGsWindow.cpp
-     1>DbgGsWindow.cpp(94): warning C4101: 'hbr' : unreferenced local variable
-     1>DbgGsWindow.cpp(93): warning C4101: 'hbrOld' : unreferenced local variable
-     1>DbgGsWindow.cpp(92): warning C4101: 'dc' : unreferenced local variable
-     1>DbgGsWindow.cpp(227): warning C4018: '<' : signed/unsigned mismatch
-     1>DbgGsWindow.cpp(306): warning C4996: 'swprintf': swprintf has been changed to conform with the ISO C standard, adding an extra character count parameter. To use traditional Microsoft swprintf, set _CRT_NON_CONFORMING_SWPRINTFS.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\swprintf.inl(85) : see declaration of 'swprintf'
-       ResourceCompile:
-         All outputs are up-to-date.
+﻿Build started 3/2/2014 2:43:59 PM.
+     1>Project "C:\Users\Oleg Laptop\Downloads\DbgGsWindow\DbgGsWindow.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt mapGen\spaceShipGenerator.cpp
+         spaceShipGenerator.cpp
+     1>c:\users\oleg laptop\downloads\dbggswindow\WinConnect.h(5): warning C4099: 'DrawBuffer' : type name first seen using 'class' now seen using 'struct'
+                 c:\users\oleg laptop\downloads\dbggswindow\mapgen\Ship.h(8) : see declaration of 'DrawBuffer'
+     1>mapGen\spaceShipGenerator.cpp(38): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>mapGen\spaceShipGenerator.cpp(500): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\stdlib.h(937) : see declaration of 'itoa'
        Link:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\DO_NOT_DELETE\DbgGsWindow\DbgGsWindow\Release\DbgGsWindow.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\DbgGsWindow.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\DO_NOT_DELETE\DbgGsWindow\DbgGsWindow\Release\DbgGsWindow.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\DO_NOT_DELETE\DbgGsWindow\DbgGsWindow\Release\DbgGsWindow.lib" /MACHINE:X86 Release\DbgGsWindow.res
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Oleg Laptop\Downloads\DbgGsWindow\Release\DbgGsWindow.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Oleg Laptop\Downloads\DbgGsWindow\Release\DbgGsWindow.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Oleg Laptop\Downloads\DbgGsWindow\Release\DbgGsWindow.lib" /MACHINE:X86 /SAFESEH Release\DbgGsWindow.res
          Release\DbgGsWindow.obj
+         Release\spaceShipGenerator.obj
+         Release\PrimDraw.obj
+         Release\WinConnect.obj
          Release\stdafx.obj
          Generating code
          Finished generating code
-         DbgGsWindow.vcxproj -> C:\DO_NOT_DELETE\DbgGsWindow\DbgGsWindow\Release\DbgGsWindow.exe
-       Manifest:
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\DO_NOT_DELETE\DbgGsWindow\DbgGsWindow\Release\DbgGsWindow.exe;#1" /manifest Release\DbgGsWindow.exe.intermediate.manifest
-       FinalizeBuildStatus:
-         Deleting file "Release\DbgGsWindow.unsuccessfulbuild".
-         Touching "Release\DbgGsWindow.lastbuildstate".
-     1>Done Building Project "C:\DO_NOT_DELETE\DbgGsWindow\DbgGsWindow\DbgGsWindow.vcxproj" (build target(s)).
+         DbgGsWindow.vcxproj -> C:\Users\Oleg Laptop\Downloads\DbgGsWindow\Release\DbgGsWindow.exe
+     1>Done Building Project "C:\Users\Oleg Laptop\Downloads\DbgGsWindow\DbgGsWindow.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.74
+Time Elapsed 00:00:02.59
